@@ -180,9 +180,14 @@
         .hero-bg {
             position: absolute;
             inset: 0;
-            background-color: #1A1A1A;
+            background-color: #141412;
+            background-image:
+                radial-gradient(ellipse at 70% 45%, rgba(196,153,90,0.13) 0%, transparent 58%),
+                radial-gradient(ellipse at 15% 70%, rgba(196,153,90,0.06) 0%, transparent 45%);
         }
         .hero-bg img {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -781,9 +786,8 @@
 ======== -->
 <section id="hero">
     <div class="hero-bg">
-        <img src="images/hero.jpg"
-             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1800&h=1200&fit=crop&q=92&crop=center'"
-             alt="אדרת — קדושה בסטייל" loading="eager">
+        <img src="images/hero.jpg" alt="אדרת — קדושה בסטייל" loading="eager"
+             onerror="this.style.display='none'">
     </div>
     <div class="hero-grad"></div>
 
