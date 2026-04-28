@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="агшъ - чгещд бсиййм">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1A1A1A"/>
+      <stop offset="100%" stop-color="#2D2D2D"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#D4B47A"/>
+      <stop offset="100%" stop-color="#A07840"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="70" y="70" width="1060" height="490" rx="14" fill="none" stroke="#C4995A" stroke-opacity="0.45" stroke-width="2"/>
+
+  <text x="600" y="250" text-anchor="middle" fill="url(#gold)" font-size="150" font-family="serif" font-weight="700">агшъ</text>
+  <text x="600" y="325" text-anchor="middle" fill="#E6D5B5" font-size="52" font-family="sans-serif" letter-spacing="3">чгещд бсиййм</text>
+  <text x="600" y="390" text-anchor="middle" fill="#C9B391" font-size="34" font-family="sans-serif">
+    имйъеъ отецбеъ бдъаод айщйъ
+  </text>
+</svg>
