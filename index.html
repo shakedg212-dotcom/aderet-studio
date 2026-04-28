@@ -6,728 +6,1064 @@
     <title>אדרת | קדושה בסטייל</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'cream': '#F5F0E8',
-                        'warm-white': '#FAFAF7',
-                        'charcoal': '#2C2C2C',
-                        'taupe': '#8B7D6B',
-                        'olive': '#6B7355',
-                        'gold': '#B8956A',
-                        'gold-light': '#D4B896',
-                        'stone': '#C4B5A0',
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Heebo:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --onyx: #1A1A1A;
+            --charcoal: #2D2D2D;
+            --cream: #F7F3EC;
+            --off-white: #FAFAF7;
+            --stone: #B0A090;
+            --bronze: #C4995A;
+            --bronze-light: #D4B47A;
+            --bronze-dark: #A07840;
+            --muted: rgba(26,26,26,0.45);
+        }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Assistant', sans-serif;
-            background-color: #FAFAF7;
-            color: #2C2C2C;
+            font-family: 'Heebo', sans-serif;
+            background: var(--off-white);
+            color: var(--onyx);
             direction: rtl;
+            -webkit-font-smoothing: antialiased;
         }
 
         h1, h2, h3, h4 { font-family: 'Frank Ruhl Libre', serif; }
+        a { text-decoration: none; color: inherit; }
+        img { display: block; max-width: 100%; }
 
-        .hero-overlay {
-            background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.08) 40%, rgba(0,0,0,0.6) 100%);
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--cream); }
+        ::-webkit-scrollbar-thumb { background: var(--bronze); }
+
+        /* === UTILS === */
+        .label {
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.67rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--bronze);
+            display: block;
         }
 
-        .nav-link {
+        .gold-line {
+            width: 48px;
+            height: 1px;
+            background: linear-gradient(to left, transparent, var(--bronze), transparent);
+        }
+
+        /* === REVEAL === */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.85s ease, transform 0.85s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ================================
+           HEADER
+        ================================ */
+        #header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 22px 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+        }
+
+        #header.scrolled {
+            background: rgba(250,250,247,0.96);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            padding: 14px 52px;
+            box-shadow: 0 1px 0 rgba(176,160,144,0.2);
+        }
+
+        .logo-mark { font-size: 1.8rem; font-weight: 700; letter-spacing: 0.06em; color: white; line-height: 1; transition: color 0.4s; }
+        .logo-sub  { font-size: 0.58rem; letter-spacing: 0.32em; color: var(--bronze-light); margin-top: 3px; transition: color 0.4s; }
+        #header.scrolled .logo-mark { color: var(--onyx); }
+        #header.scrolled .logo-sub  { color: var(--bronze); }
+
+        .nav-list { display: flex; align-items: center; gap: 36px; list-style: none; }
+        .nav-list a {
+            font-size: 0.81rem;
+            letter-spacing: 0.05em;
+            color: rgba(255,255,255,0.78);
+            transition: color 0.3s;
             position: relative;
         }
-        .nav-link::after {
+        .nav-list a::after {
             content: '';
             position: absolute;
-            bottom: -2px;
-            right: 0;
-            width: 0;
-            height: 1px;
-            background-color: #B8956A;
-            transition: width 0.3s ease;
+            bottom: -3px; right: 0;
+            width: 0; height: 1px;
+            background: var(--bronze);
+            transition: width 0.3s;
         }
-        .nav-link:hover::after { width: 100%; }
+        .nav-list a:hover { color: white; }
+        .nav-list a:hover::after { width: 100%; }
+        #header.scrolled .nav-list a { color: var(--charcoal); }
+        #header.scrolled .nav-list a:hover { color: var(--bronze); }
 
-        .product-card {
-            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        .nav-cta {
+            font-size: 0.77rem;
+            letter-spacing: 0.09em;
+            padding: 10px 26px;
+            border: 1px solid rgba(255,255,255,0.38);
+            color: white;
+            transition: all 0.3s;
         }
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 24px 64px rgba(0,0,0,0.13);
-        }
-        .product-card .card-img {
-            transition: transform 0.55s ease;
-        }
-        .product-card:hover .card-img { transform: scale(1.06); }
+        .nav-cta:hover { background: white; color: var(--onyx); border-color: white; }
+        #header.scrolled .nav-cta { border-color: var(--onyx); color: var(--onyx); }
+        #header.scrolled .nav-cta:hover { background: var(--onyx); color: white; }
 
-        .step-number {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: 4.5rem;
-            line-height: 1;
-            color: #D4B896;
-            opacity: 0.3;
+        #mob-btn { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+
+        /* ================================
+           MOBILE NAV
+        ================================ */
+        #mob-nav {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--off-white);
+            z-index: 99;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+        }
+        #mob-nav.open { display: flex; }
+        #mob-nav a { font-family: 'Frank Ruhl Libre', serif; font-size: 2.4rem; color: var(--onyx); transition: color 0.3s; }
+        #mob-nav a:hover { color: var(--bronze); }
+        .mob-close { position: absolute; top: 24px; left: 24px; background: none; border: none; cursor: pointer; font-size: 1.8rem; color: var(--charcoal); }
+
+        /* ================================
+           HERO
+        ================================ */
+        #hero {
+            position: relative;
+            height: 100vh;
+            min-height: 680px;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
         }
 
-        .gold-divider {
-            width: 60px;
-            height: 1px;
-            background: linear-gradient(to left, transparent, #B8956A, transparent);
+        .hero-bg { position: absolute; inset: 0; }
+        .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+        .hero-grad {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom,
+                rgba(0,0,0,0.18) 0%,
+                rgba(0,0,0,0.0) 38%,
+                rgba(0,0,0,0.0) 48%,
+                rgba(0,0,0,0.72) 100%);
+        }
+
+        .hero-body {
+            position: relative; z-index: 2;
+            text-align: center;
+            padding: 0 24px 88px;
+            width: 100%; max-width: 920px;
+        }
+
+        .hero-eyebrow { color: rgba(212,180,122,0.82); margin-bottom: 20px; }
+
+        .hero-vert-line {
+            width: 1px; height: 52px;
+            background: linear-gradient(to bottom, transparent, var(--bronze), transparent);
+            margin: 0 auto 28px;
+        }
+
+        .hero-title {
+            font-size: clamp(5.5rem, 14vw, 11.5rem);
+            font-weight: 900;
+            color: white;
+            line-height: 0.92;
+            letter-spacing: 0.025em;
+        }
+
+        .hero-tagline {
+            font-size: clamp(1.15rem, 2.4vw, 1.9rem);
+            font-weight: 300;
+            color: rgba(255,255,255,0.72);
+            margin-top: 18px;
+            letter-spacing: 0.08em;
+        }
+
+        .hero-vert-line-bottom {
+            width: 1px; height: 40px;
+            background: linear-gradient(to bottom, var(--bronze), transparent);
+            margin: 28px auto;
+        }
+
+        .hero-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+        .btn-bronze {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 38px;
+            background: var(--bronze);
+            color: white;
+            font-size: 0.81rem;
+            letter-spacing: 0.1em;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .btn-bronze:hover { background: var(--bronze-dark); transform: translateY(-1px); }
+
+        .btn-ghost {
+            display: inline-flex; align-items: center;
+            padding: 14px 38px;
+            border: 1px solid rgba(255,255,255,0.38);
+            color: white;
+            font-size: 0.81rem;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+        }
+        .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+
+        @keyframes heroFade {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .ha1 { animation: heroFade 1s ease 0.15s both; }
+        .ha2 { animation: heroFade 1s ease 0.4s  both; }
+        .ha3 { animation: heroFade 1s ease 0.7s  both; }
+
+        /* ================================
+           TICKER
+        ================================ */
+        .ticker-wrap { background: var(--onyx); overflow: hidden; padding: 14px 0; white-space: nowrap; }
+        .ticker-track { display: inline-flex; animation: tick 32s linear infinite; }
+        @keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .ti { display: inline-flex; align-items: center; gap: 28px; padding: 0 28px; font-size: 0.71rem; letter-spacing: 0.2em; }
+        .ti.g { color: var(--bronze); }
+        .ti.m { color: rgba(176,160,144,0.48); }
+        .tick-dot { width: 3px; height: 3px; background: var(--bronze); border-radius: 50%; flex-shrink: 0; }
+
+        /* ================================
+           MANIFESTO
+        ================================ */
+        .manifesto {
+            background: var(--cream);
+            padding: 128px 48px;
+            text-align: center;
+        }
+        .manifesto h2 {
+            font-size: clamp(1.75rem, 3.8vw, 3.3rem);
+            font-weight: 300;
+            color: var(--onyx);
+            line-height: 1.5;
+            max-width: 820px;
+            margin: 0 auto 28px;
+        }
+        .manifesto h2 em { font-style: normal; color: var(--bronze); }
+        .manifesto p { font-size: 0.96rem; color: var(--muted); line-height: 1.85; }
+
+        /* ================================
+           COLLECTION
+        ================================ */
+        #collection { padding: 128px 52px; background: var(--off-white); }
+
+        .sec-head { text-align: center; margin-bottom: 72px; }
+        .sec-head h2 { font-size: clamp(2.3rem, 3.8vw, 3.8rem); font-weight: 700; margin: 16px 0 20px; }
+        .sec-head p { font-size: 0.95rem; color: var(--muted); line-height: 1.9; max-width: 520px; margin: 0 auto; }
+        .sec-head .gold-line { margin: 0 auto; }
+
+        /* Lookbook grid — named areas */
+        .lbgrid {
+            display: grid;
+            grid-template-columns: 4.5fr 3.5fr 3fr;
+            grid-template-rows: 520px 300px 360px;
+            grid-template-areas:
+                "a b b"
+                "a c d"
+                "e e f";
+            gap: 14px;
+            max-width: 1280px;
             margin: 0 auto;
         }
 
-        .whatsapp-btn {
-            background-color: #25D366;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-        }
-        .whatsapp-btn:hover {
-            background-color: #1da851;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(37,211,102,0.35);
-        }
+        .pc-a { grid-area: a; }
+        .pc-b { grid-area: b; }
+        .pc-c { grid-area: c; }
+        .pc-d { grid-area: d; }
+        .pc-e { grid-area: e; }
+        .pc-f { grid-area: f; }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(32px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .anim-0 { animation: fadeInUp 0.85s ease 0.1s both; }
-        .anim-1 { animation: fadeInUp 0.85s ease 0.35s both; }
-        .anim-2 { animation: fadeInUp 0.85s ease 0.6s both; }
-
-        .section-fade {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.75s ease, transform 0.75s ease;
-        }
-        .section-fade.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #F5F0E8; }
-        ::-webkit-scrollbar-thumb { background: #B8956A; border-radius: 3px; }
-
-        .badge {
-            font-family: 'Assistant', sans-serif;
-            font-size: 0.7rem;
-            letter-spacing: 0.05em;
-        }
-
-        .ticker-wrap {
+        .pcard {
+            position: relative;
             overflow: hidden;
-            white-space: nowrap;
+            cursor: pointer;
         }
-        .ticker-inner {
-            display: inline-block;
-            animation: ticker 28s linear infinite;
+
+        .pcard-img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        @keyframes ticker {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        .pcard:hover .pcard-img { transform: scale(1.06); }
+
+        .pcard-veil {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 55%);
+        }
+
+        .pcard-data {
+            position: absolute;
+            bottom: 0; right: 0; left: 0;
+            padding: 26px 22px;
+        }
+
+        .pcard-name {
+            font-family: 'Frank Ruhl Libre', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 4px;
+        }
+        .pcard-sub { font-size: 0.76rem; color: rgba(255,255,255,0.58); letter-spacing: 0.04em; margin-bottom: 10px; }
+        .pcard-price { font-family: 'Frank Ruhl Libre', serif; font-size: 1.25rem; color: var(--bronze-light); }
+
+        .pcard-badge {
+            position: absolute;
+            top: 16px; left: 16px;
+            font-size: 0.61rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 5px 12px;
+        }
+        .badge-dark { background: var(--onyx); color: var(--bronze-light); }
+        .badge-gold { background: var(--bronze); color: white; }
+
+        .collection-foot {
+            text-align: center;
+            margin-top: 60px;
+        }
+        .collection-foot p { font-size: 0.81rem; color: var(--muted); margin-bottom: 22px; letter-spacing: 0.04em; }
+        .btn-outline-dark {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 13px 36px;
+            border: 1px solid rgba(26,26,26,0.45);
+            font-size: 0.81rem;
+            letter-spacing: 0.08em;
+            color: var(--onyx);
+            transition: all 0.3s;
+        }
+        .btn-outline-dark:hover { background: var(--onyx); color: white; }
+
+        /* ================================
+           ABOUT
+        ================================ */
+        #about { background: var(--cream); padding: 148px 0; }
+
+        .about-grid {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 52px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+        }
+
+        .about-img-wrap { position: relative; }
+
+        .about-frame {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+        }
+        .about-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .about-frame-border {
+            position: absolute; top: 20px; left: 20px; right: 20px; bottom: 20px;
+            border: 1px solid rgba(196,153,90,0.28);
+            pointer-events: none;
+        }
+
+        .about-qcard {
+            position: absolute;
+            bottom: -28px; right: -28px;
+            background: white;
+            padding: 26px 30px;
+            max-width: 256px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        .about-qcard .qt { font-family: 'Frank Ruhl Libre', serif; font-size: 1.02rem; color: var(--onyx); line-height: 1.55; }
+        .about-qcard .qs { font-size: 0.7rem; color: var(--muted); margin-top: 8px; letter-spacing: 0.03em; }
+
+        .about-text .label { margin-bottom: 20px; }
+        .about-text h2 {
+            font-size: clamp(2.5rem, 3.3vw, 3.7rem);
+            font-weight: 700;
+            color: var(--onyx);
+            line-height: 1.08;
+            margin-bottom: 26px;
+        }
+        .about-body { font-size: 0.98rem; line-height: 2; color: rgba(26,26,26,0.62); }
+        .about-body p + p { margin-top: 18px; }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            margin-top: 52px;
+            background: rgba(176,160,144,0.2);
+        }
+        .stat-cell { background: var(--cream); padding: 26px 20px; text-align: center; }
+        .stat-icon { font-size: 1.5rem; color: var(--bronze); margin-bottom: 8px; }
+        .stat-lbl { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
+
+        /* ================================
+           PROCESS
+        ================================ */
+        #process { background: var(--onyx); padding: 148px 52px; }
+
+        .process-top {
+            max-width: 1280px; margin: 0 auto;
+            display: flex; align-items: flex-end; justify-content: space-between;
+            margin-bottom: 80px;
+        }
+        .process-top .label { margin-bottom: 14px; }
+        .process-top h2 { font-size: clamp(2.5rem, 4vw, 4.5rem); font-weight: 700; color: white; line-height: 0.95; }
+
+        .process-steps {
+            max-width: 1280px; margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: rgba(176,160,144,0.11);
+        }
+        .step {
+            background: var(--onyx);
+            padding: 52px 34px;
+            transition: background 0.3s;
+        }
+        .step:hover { background: rgba(196,153,90,0.06); }
+        .step-num { font-family: 'Frank Ruhl Libre', serif; font-size: 3.8rem; line-height: 1; color: var(--bronze); opacity: 0.17; margin-bottom: 30px; }
+        .step-ico {
+            width: 46px; height: 46px;
+            border: 1px solid rgba(196,153,90,0.3);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+        .step:hover .step-ico { border-color: var(--bronze); }
+        .step-ico svg { color: var(--bronze); }
+        .step-name { font-family: 'Frank Ruhl Libre', serif; font-size: 1.1rem; color: white; margin-bottom: 10px; }
+        .step-desc { font-size: 0.83rem; color: rgba(176,160,144,0.55); line-height: 1.72; }
+
+        /* ================================
+           TESTIMONIAL
+        ================================ */
+        .testi { background: var(--off-white); padding: 148px 48px; }
+        .testi-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+        .testi-qmark { font-family: 'Frank Ruhl Libre', serif; font-size: 9rem; line-height: 0.75; color: var(--bronze); opacity: 0.1; margin-bottom: -20px; }
+        .testi-text {
+            font-family: 'Frank Ruhl Libre', serif;
+            font-size: clamp(1.35rem, 2.4vw, 2rem);
+            font-weight: 300;
+            color: var(--onyx);
+            line-height: 1.65;
+            margin-bottom: 36px;
+        }
+        .testi-auth { font-size: 0.76rem; color: var(--muted); letter-spacing: 0.14em; margin-top: 20px; }
+
+        /* ================================
+           CONTACT
+        ================================ */
+        #contact { background: var(--cream); padding: 148px 0; }
+
+        .contact-grid {
+            max-width: 1280px; margin: 0 auto; padding: 0 52px;
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 100px;
+            align-items: start;
+        }
+
+        .contact-info .label { margin-bottom: 18px; }
+        .contact-info h2 { font-size: clamp(2.4rem, 3.3vw, 3.7rem); font-weight: 700; color: var(--onyx); line-height: 1.08; margin-bottom: 28px; }
+        .contact-info p { font-size: 0.98rem; color: rgba(26,26,26,0.6); line-height: 1.9; margin-bottom: 36px; }
+
+        .btn-wa {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 15px 34px;
+            background: #25D366;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+        .btn-wa:hover { background: #1da851; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(37,211,102,0.28); }
+
+        .social-bar { display: flex; align-items: center; gap: 10px; margin-top: 36px; }
+        .social-lbl { font-size: 0.74rem; color: var(--muted); letter-spacing: 0.1em; margin-left: 6px; }
+        .social-ico {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(176,160,144,0.33);
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(26,26,26,0.38);
+            transition: border-color 0.3s, color 0.3s;
+        }
+        .social-ico:hover { border-color: var(--bronze); color: var(--bronze); }
+
+        .contact-form { background: white; padding: 52px 48px; }
+        .contact-form h3 { font-family: 'Frank Ruhl Libre', serif; font-size: 1.4rem; color: var(--onyx); margin-bottom: 32px; }
+
+        .field { margin-bottom: 20px; }
+        .field label { display: block; font-size: 0.73rem; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 8px; }
+        .field input, .field select, .field textarea {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1px solid rgba(176,160,144,0.3);
+            background: var(--off-white);
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.88rem;
+            color: var(--onyx);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--bronze); }
+        .field textarea { resize: none; }
+
+        .btn-send {
+            width: 100%; padding: 15px;
+            background: var(--onyx); color: white;
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.84rem;
+            letter-spacing: 0.1em;
+            border: none; cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-send:hover { background: var(--bronze); }
+
+        .form-ok { display: none; text-align: center; font-size: 0.83rem; color: #4a7c59; padding-top: 12px; letter-spacing: 0.04em; }
+
+        /* ================================
+           FOOTER
+        ================================ */
+        footer { background: var(--onyx); padding: 72px 52px 48px; }
+
+        .foot-inner { max-width: 1280px; margin: 0 auto; }
+        .foot-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 64px; }
+        .foot-brand .wm { font-family: 'Frank Ruhl Libre', serif; font-size: 2.4rem; font-weight: 700; color: white; line-height: 1; }
+        .foot-brand .tg { font-size: 0.6rem; letter-spacing: 0.35em; color: var(--bronze); margin-top: 6px; }
+        .foot-nav { display: flex; gap: 36px; }
+        .foot-nav a { font-size: 0.8rem; color: rgba(176,160,144,0.5); letter-spacing: 0.04em; transition: color 0.3s; }
+        .foot-nav a:hover { color: var(--bronze); }
+        .foot-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 1px solid rgba(176,160,144,0.11); }
+        .foot-copy { font-size: 0.71rem; color: rgba(176,160,144,0.28); letter-spacing: 0.04em; }
+
+        /* ================================
+           FLOATING WHATSAPP
+        ================================ */
+        .wa-float {
+            position: fixed;
+            bottom: 28px; left: 28px;
+            z-index: 50;
+            width: 56px; height: 56px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 8px 24px rgba(37,211,102,0.33);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .wa-float:hover { transform: scale(1.1); box-shadow: 0 16px 40px rgba(37,211,102,0.4); }
+
+        /* ================================
+           RESPONSIVE
+        ================================ */
+        @media (max-width: 1100px) {
+            .lbgrid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+                grid-template-areas:
+                    "a b"
+                    "c d"
+                    "e f";
+            }
+            .lbgrid .pcard { min-height: 340px; }
+            .lbgrid .pcard-img { min-height: 340px; }
+            .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 60px; }
+            .about-qcard { position: relative; bottom: auto; right: auto; margin-top: 20px; max-width: 100%; }
+            .process-steps { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            #header { padding: 18px 24px; }
+            #header.scrolled { padding: 14px 24px; }
+            .nav-list, .nav-cta { display: none; }
+            #mob-btn { display: block; }
+            .manifesto { padding: 80px 24px; }
+            #collection { padding: 80px 24px; }
+            .sec-head { margin-bottom: 44px; }
+            .lbgrid { grid-template-columns: 1fr; grid-template-areas: "a" "b" "c" "d" "e" "f"; }
+            .lbgrid .pcard { min-height: 280px; }
+            .lbgrid .pcard-img { min-height: 280px; }
+            #about { padding: 80px 0; }
+            .about-grid { padding: 0 24px; }
+            #process { padding: 80px 24px; }
+            .process-steps { grid-template-columns: 1fr; }
+            .process-top { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .testi { padding: 80px 24px; }
+            #contact { padding: 80px 0; }
+            .contact-grid { padding: 0 24px; gap: 48px; }
+            .contact-form { padding: 36px 24px; }
+            footer { padding: 56px 24px 40px; }
+            .foot-top { flex-direction: column; gap: 36px; }
+            .foot-bottom { flex-direction: column; gap: 14px; text-align: center; }
         }
     </style>
 </head>
-<body class="bg-warm-white">
+<body>
 
-<!-- ===================== HEADER ===================== -->
-<header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-        style="background: rgba(250,250,247,0.93); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(196,181,160,0.2);">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+<!-- ======== MOBILE NAV ======== -->
+<div id="mob-nav">
+    <button class="mob-close" onclick="toggleMob()">✕</button>
+    <a href="#hero"       onclick="toggleMob()">דף הבית</a>
+    <a href="#collection" onclick="toggleMob()">קולקציה</a>
+    <a href="#about"      onclick="toggleMob()">מי אנחנו</a>
+    <a href="#contact"    onclick="toggleMob()">צור קשר</a>
+</div>
 
-        <!-- Logo -->
-        <a href="#hero" class="text-center cursor-pointer">
-            <div class="text-[1.9rem] font-bold text-charcoal leading-none" style="font-family:'Frank Ruhl Libre',serif; letter-spacing:0.04em;">אדרת</div>
-            <div class="text-[0.65rem] tracking-[0.25em] text-gold mt-0.5">קדושה בסטייל</div>
-        </a>
+<!-- ======== HEADER ======== -->
+<header id="header">
+    <a href="#hero">
+        <div class="logo-mark">אדרת</div>
+        <div class="logo-sub">קדושה בסטייל</div>
+    </a>
 
-        <!-- Desktop Nav -->
-        <nav class="hidden md:flex items-center gap-8">
-            <a href="#hero"       class="nav-link text-sm text-charcoal hover:text-gold transition-colors">דף הבית</a>
-            <a href="#collection" class="nav-link text-sm text-charcoal hover:text-gold transition-colors">קולקציה</a>
-            <a href="#about"      class="nav-link text-sm text-charcoal hover:text-gold transition-colors">מי אנחנו</a>
-            <a href="#contact"    class="nav-link text-sm text-charcoal hover:text-gold transition-colors">צור קשר</a>
-        </nav>
+    <nav>
+        <ul class="nav-list">
+            <li><a href="#collection">קולקציה</a></li>
+            <li><a href="#about">מי אנחנו</a></li>
+            <li><a href="#contact">צור קשר</a></li>
+        </ul>
+    </nav>
 
-        <!-- CTA -->
-        <a href="#contact" class="hidden md:inline-flex items-center px-6 py-2.5 bg-charcoal text-white text-sm hover:bg-gold transition-colors duration-300"
-           style="font-family:'Assistant',sans-serif; letter-spacing:0.04em;">
-            הזמן עכשיו
-        </a>
+    <a href="#contact" class="nav-cta">הזמן עכשיו</a>
 
-        <!-- Mobile hamburger -->
-        <button id="mobile-menu-btn" class="md:hidden p-2 text-charcoal">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-        </button>
-    </div>
-
-    <!-- Mobile Nav -->
-    <div id="mobile-menu" class="hidden md:hidden px-6 py-5 border-t border-stone/20" style="background:rgba(250,250,247,0.97);">
-        <nav class="flex flex-col gap-5">
-            <a href="#hero"       class="text-charcoal hover:text-gold transition-colors" onclick="closeMobileMenu()">דף הבית</a>
-            <a href="#collection" class="text-charcoal hover:text-gold transition-colors" onclick="closeMobileMenu()">קולקציה</a>
-            <a href="#about"      class="text-charcoal hover:text-gold transition-colors" onclick="closeMobileMenu()">מי אנחנו</a>
-            <a href="#contact"    class="text-charcoal hover:text-gold transition-colors" onclick="closeMobileMenu()">צור קשר</a>
-        </nav>
-    </div>
+    <button id="mob-btn" onclick="toggleMob()">
+        <svg id="ham-ico" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+    </button>
 </header>
 
-<!-- ===================== HERO ===================== -->
-<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 bg-charcoal">
-        <img class="w-full h-full object-cover opacity-55"
-             src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1600&h=950&fit=crop&q=85"
-             alt="אדרת - קדושה בסטייל"
-             loading="eager"
-             style="object-position: center 20%;">
-        <div class="hero-overlay absolute inset-0"></div>
+<!-- ======== HERO ======== -->
+<section id="hero">
+    <div class="hero-bg">
+        <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1800&h=1200&fit=crop&q=92&crop=center"
+             alt="אדרת - קדושה בסטייל" loading="eager">
+        <div class="hero-grad"></div>
     </div>
 
-    <div class="relative z-10 text-center text-white px-6 max-w-4xl mx-auto">
-        <p class="anim-0 text-gold-light text-xs tracking-[0.35em] uppercase mb-8"
-           style="font-family:'Assistant',sans-serif;">
-            עיצוב טליתות בוטיק · ישראל
-        </p>
-
-        <h1 class="anim-0 text-[5.5rem] md:text-[9rem] font-bold text-white leading-none mb-2"
-            style="font-family:'Frank Ruhl Libre',serif; letter-spacing:0.02em;">
-            אדרת
-        </h1>
-
-        <div class="anim-1 gold-divider my-7"></div>
-
-        <h2 class="anim-1 text-2xl md:text-4xl text-white/90 mb-5 font-light"
-            style="font-family:'Frank Ruhl Libre',serif;">
-            קדושה בסטייל
-        </h2>
-
-        <p class="anim-1 text-base md:text-lg text-white/65 mb-12 max-w-xl mx-auto leading-relaxed"
-           style="font-family:'Assistant',sans-serif;">
-            טליתות מעוצבות בהתאמה אישית, ברמת גימור שטרם הכרתם.
-        </p>
-
-        <div class="anim-2 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#collection"
-               class="px-10 py-4 bg-gold text-white hover:bg-gold-light transition-colors duration-300 text-sm tracking-wider"
-               style="font-family:'Assistant',sans-serif;">
-                לצפייה בקולקציה
-            </a>
-            <a href="#contact"
-               class="px-10 py-4 border border-white/40 text-white hover:bg-white/10 transition-colors duration-300 text-sm tracking-wider"
-               style="font-family:'Assistant',sans-serif;">
-                לצור קשר
-            </a>
+    <div class="hero-body">
+        <span class="label hero-eyebrow ha1">עיצוב טליתות בוטיק &nbsp;·&nbsp; ישראל</span>
+        <div class="hero-vert-line ha1"></div>
+        <h1 class="hero-title ha2">אדרת</h1>
+        <p class="hero-tagline ha3">קדושה בסטייל</p>
+        <div class="hero-vert-line-bottom ha3"></div>
+        <div class="hero-btns ha3">
+            <a href="#collection" class="btn-bronze">לצפייה בקולקציה</a>
+            <a href="#contact"    class="btn-ghost">הזמנה אישית</a>
         </div>
-    </div>
-
-    <!-- Scroll arrow -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 animate-bounce">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"/>
-        </svg>
     </div>
 </section>
 
-<!-- ===================== TICKER STRIP ===================== -->
-<div class="bg-charcoal py-4 overflow-hidden ticker-wrap">
-    <div class="ticker-inner text-sm tracking-widest" style="font-family:'Assistant',sans-serif;">
-        <span class="text-gold mx-10">הידור מצווה ברמה אחרת</span>
-        <span class="text-stone/40 mx-4">·</span>
-        <span class="text-stone/70 mx-10">הטלית שלך. הסיפור שלך.</span>
-        <span class="text-stone/40 mx-4">·</span>
-        <span class="text-gold mx-10">מתנה מושלמת לחתן ולבר המצווה</span>
-        <span class="text-stone/40 mx-4">·</span>
-        <span class="text-stone/70 mx-10">קדושה שמרגישים, סטייל שלא שוכחים</span>
-        <span class="text-stone/40 mx-4">·</span>
-        <span class="text-gold mx-10">הידור מצווה ברמה אחרת</span>
-        <span class="text-stone/40 mx-4">·</span>
-        <span class="text-stone/70 mx-10">הטלית שלך. הסיפור שלך.</span>
-        <span class="text-stone/40 mx-4">·</span>
-        <span class="text-gold mx-10">מתנה מושלמת לחתן ולבר המצווה</span>
-        <span class="text-stone/40 mx-4">·</span>
-        <span class="text-stone/70 mx-10">קדושה שמרגישים, סטייל שלא שוכחים</span>
-        <span class="text-stone/40 mx-4">·</span>
+<!-- ======== TICKER ======== -->
+<div class="ticker-wrap">
+    <div class="ticker-track">
+        <span class="ti g">הידור מצווה ברמה אחרת</span>
+        <span class="tick-dot"></span>
+        <span class="ti m">הטלית שלך. הסיפור שלך.</span>
+        <span class="tick-dot"></span>
+        <span class="ti g">מתנה מושלמת לחתן ולבר המצווה</span>
+        <span class="tick-dot"></span>
+        <span class="ti m">קדושה שמרגישים, סטייל שלא שוכחים</span>
+        <span class="tick-dot"></span>
+        <span class="ti g">בדים מובחרים · רקמה ידנית · עיצוב בוטיק</span>
+        <span class="tick-dot"></span>
+        <span class="ti g">הידור מצווה ברמה אחרת</span>
+        <span class="tick-dot"></span>
+        <span class="ti m">הטלית שלך. הסיפור שלך.</span>
+        <span class="tick-dot"></span>
+        <span class="ti g">מתנה מושלמת לחתן ולבר המצווה</span>
+        <span class="tick-dot"></span>
+        <span class="ti m">קדושה שמרגישים, סטייל שלא שוכחים</span>
+        <span class="tick-dot"></span>
+        <span class="ti g">בדים מובחרים · רקמה ידנית · עיצוב בוטיק</span>
+        <span class="tick-dot"></span>
     </div>
 </div>
 
-<!-- ===================== ABOUT US ===================== -->
-<section id="about" class="py-28 bg-cream section-fade">
-    <div class="max-w-6xl mx-auto px-6">
-        <div class="grid md:grid-cols-2 gap-20 items-center">
+<!-- ======== MANIFESTO ======== -->
+<div class="manifesto reveal">
+    <span class="label" style="margin-bottom:24px;">הפילוסופיה שלנו</span>
+    <div class="gold-line" style="margin:0 auto 40px;"></div>
+    <h2>קדושה וסטייל אינם שני עולמות נפרדים —<br>הם <em>משלימים זה את זה</em>.</h2>
+    <p>כל טלית אדרת היא יצירת אמנות של ממש. מבדים מובחרים, דרך עטרות מעוצבות ועד לרקמה אישית — הידור שלא מוותר על דבר.</p>
+</div>
 
-            <!-- Text -->
-            <div>
-                <p class="text-gold text-xs tracking-[0.3em] uppercase mb-4" style="font-family:'Assistant',sans-serif;">הסיפור שלנו</p>
-                <h2 class="text-4xl md:text-5xl font-bold text-charcoal mb-5 leading-tight" style="font-family:'Frank Ruhl Libre',serif;">מי אנחנו</h2>
-                <div class="mb-8" style="width:60px; height:1px; background:linear-gradient(to left, transparent, #B8956A, transparent);"></div>
+<!-- ======== COLLECTION ======== -->
+<section id="collection">
+    <div class="sec-head reveal">
+        <span class="label">הקולקציה שלנו</span>
+        <div class="gold-line" style="margin:16px auto;"></div>
+        <h2>בחרו את הטלית שלכם</h2>
+        <p>כל דגם זמין בהתאמה אישית מלאה — שם, פסוק, צבע וסגנון עטרה.</p>
+    </div>
 
-                <div class="space-y-5 leading-[1.95]" style="font-family:'Assistant',sans-serif; font-size:1.05rem; color:#3a3a3a;">
-                    <p>
-                        באדרת, אנחנו מאמינים שקדושה וסטייל הם לא שני עולמות נפרדים, אלא משלימים זה את זה.
-                    </p>
-                    <p>
-                        העסק נולד מתוך תשוקה להעניק למצווה היקרה של עטיפת הטלית פרשנות מודרנית, מכובדת ובלתי מתפשרת.
-                    </p>
-                    <p>
-                        כל טלית אצלנו היא יצירת אמנות של ממש – משילוב בדים מובחרים, דרך עיצוב עטרות ייחודיות ועד לרקמה אישית שנעשית בדיוק ובהקפדה.
-                    </p>
-                    <p>
-                        אנחנו פונים לחתנים, לנערי בר מצווה ולאנשים שמעריכים איכות ורוצים להרגיש את החיבור למסורת מתוך הידור ומכובדות.
-                    </p>
+    <div class="lbgrid">
+
+        <!-- A — tall left -->
+        <article class="pcard pc-a">
+            <img class="pcard-img"
+                 src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&h=950&fit=crop&q=88"
+                 alt="דגם נחל נובע" loading="lazy">
+            <div class="pcard-veil"></div>
+            <span class="pcard-badge badge-dark">bestseller</span>
+            <div class="pcard-data">
+                <div class="pcard-name">דגם "נחל נובע"</div>
+                <div class="pcard-sub">עטרה שחורה דרמטית · עיטורי להבות</div>
+                <div class="pcard-price">₪1,200</div>
+            </div>
+        </article>
+
+        <!-- B — wide top right -->
+        <article class="pcard pc-b">
+            <img class="pcard-img"
+                 src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=900&h=560&fit=crop&q=88"
+                 alt="דגם אפור אורבני" loading="lazy">
+            <div class="pcard-veil"></div>
+            <div class="pcard-data">
+                <div class="pcard-name">דגם "אפור אורבני"</div>
+                <div class="pcard-sub">מינימליסטי · נקי · חדשני</div>
+                <div class="pcard-price">₪950</div>
+            </div>
+        </article>
+
+        <!-- C — mid right -->
+        <article class="pcard pc-c">
+            <img class="pcard-img"
+                 src="https://images.unsplash.com/photo-1609081219090-a6d81d3085bf?w=600&h=380&fit=crop&q=88"
+                 alt="דגם מזמור לתודה" loading="lazy">
+            <div class="pcard-veil"></div>
+            <span class="pcard-badge badge-gold">חדש</span>
+            <div class="pcard-data">
+                <div class="pcard-name">דגם "מזמור לתודה"</div>
+                <div class="pcard-sub">רקמת זהב עדינה</div>
+                <div class="pcard-price">₪1,100</div>
+            </div>
+        </article>
+
+        <!-- D — mid far right -->
+        <article class="pcard pc-d">
+            <img class="pcard-img"
+                 src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=500&h=380&fit=crop&q=88"
+                 alt="דגם האישי שלי" loading="lazy">
+            <div class="pcard-veil"></div>
+            <div class="pcard-data">
+                <div class="pcard-name">דגם "האישי שלי"</div>
+                <div class="pcard-sub">זמש יוקרתי · שם אישי</div>
+                <div class="pcard-price">₪850</div>
+            </div>
+        </article>
+
+        <!-- E — wide bottom left -->
+        <article class="pcard pc-e">
+            <img class="pcard-img"
+                 src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1000&h=400&fit=crop&q=88"
+                 alt="דגם חתן ספיר" loading="lazy">
+            <div class="pcard-veil"></div>
+            <span class="pcard-badge badge-dark">מומלץ לחתן</span>
+            <div class="pcard-data">
+                <div class="pcard-name">דגם "חתן ספיר"</div>
+                <div class="pcard-sub">כחול נייבי עמוק · עיטורי אש לבנים</div>
+                <div class="pcard-price">₪1,500</div>
+            </div>
+        </article>
+
+        <!-- F — bottom right -->
+        <article class="pcard pc-f">
+            <img class="pcard-img"
+                 src="https://images.unsplash.com/photo-1594938298603-d26c84a3c3f5?w=500&h=400&fit=crop&q=88"
+                 alt="דגם חום מלכותי" loading="lazy">
+            <div class="pcard-veil"></div>
+            <div class="pcard-data">
+                <div class="pcard-name">דגם "חום מלכותי"</div>
+                <div class="pcard-sub">ג'קוור נחושת · להבות</div>
+                <div class="pcard-price">₪750</div>
+            </div>
+        </article>
+
+    </div>
+
+    <div class="collection-foot reveal">
+        <p>כל הדגמים זמינים בהתאמה אישית מלאה · ניתן לרכוש עם תיק ו/או סידור תואמים</p>
+        <a href="#contact" class="btn-outline-dark">לכל הקולקציה וסגנונות נוספים ←</a>
+    </div>
+</section>
+
+<!-- ======== ABOUT ======== -->
+<section id="about">
+    <div class="about-grid">
+
+        <div class="about-img-wrap reveal">
+            <div class="about-frame">
+                <img src="https://images.unsplash.com/photo-1573476670154-a0536c25c025?w=700&h=950&fit=crop&q=88"
+                     alt="אדרת - עיצוב טליתות יוקרה" loading="lazy">
+                <div class="about-frame-border"></div>
+            </div>
+            <div class="about-qcard">
+                <div class="qt">"זֶה אֵלִי וְאַנְוֵהוּ"</div>
+                <div class="qs">התנאה לפניו במצוות — שבת קלג</div>
+            </div>
+        </div>
+
+        <div class="about-text reveal">
+            <span class="label">הסיפור שלנו</span>
+            <h2>מי אנחנו</h2>
+            <div class="gold-line" style="margin-bottom:32px;"></div>
+            <div class="about-body">
+                <p>באדרת, אנחנו מאמינים שקדושה וסטייל הם לא שני עולמות נפרדים, אלא משלימים זה את זה.</p>
+                <p>העסק נולד מתוך תשוקה להעניק למצווה היקרה של עטיפת הטלית פרשנות מודרנית, מכובדת ובלתי מתפשרת.</p>
+                <p>כל טלית אצלנו היא יצירת אמנות של ממש – משילוב בדים מובחרים, דרך עיצוב עטרות ייחודיות ועד לרקמה אישית שנעשית בדיוק ובהקפדה.</p>
+                <p>אנחנו פונים לחתנים, לנערי בר מצווה ולאנשים שמעריכים איכות ורוצים להרגיש את החיבור למסורת מתוך הידור ומכובדות.</p>
+            </div>
+            <div class="about-stats">
+                <div class="stat-cell">
+                    <div class="stat-icon">✡</div>
+                    <div class="stat-lbl">מסורת</div>
                 </div>
-
-                <div class="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-stone/25">
-                    <div class="text-center">
-                        <div class="text-4xl mb-2 text-gold">✡</div>
-                        <p class="text-xs text-charcoal/50 tracking-wider" style="font-family:'Assistant',sans-serif;">מסורת</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-4xl mb-2 text-gold">✦</div>
-                        <p class="text-xs text-charcoal/50 tracking-wider" style="font-family:'Assistant',sans-serif;">הידור</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-4xl mb-2 text-gold">◈</div>
-                        <p class="text-xs text-charcoal/50 tracking-wider" style="font-family:'Assistant',sans-serif;">אישיות</p>
-                    </div>
+                <div class="stat-cell">
+                    <div class="stat-icon">✦</div>
+                    <div class="stat-lbl">הידור</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-icon">◈</div>
+                    <div class="stat-lbl">אישיות</div>
                 </div>
             </div>
+        </div>
 
-            <!-- Image -->
-            <div class="relative">
-                <div class="relative overflow-hidden" style="aspect-ratio: 3/4;">
-                    <img class="w-full h-full object-cover"
-                         src="https://images.unsplash.com/photo-1594938298603-d26c84a3c3f5?w=700&h=950&fit=crop&q=85"
-                         alt="אדרת - עיצוב טליתות יוקרה"
-                         loading="lazy">
-                    <!-- Gold frame accent -->
-                    <div class="absolute top-4 left-4 right-4 bottom-4 border border-gold/25 pointer-events-none"></div>
-                </div>
+    </div>
+</section>
 
-                <!-- Floating quote -->
-                <div class="absolute -bottom-5 -right-5 bg-white p-6 shadow-2xl max-w-[260px]">
-                    <p class="text-charcoal text-base leading-relaxed" style="font-family:'Frank Ruhl Libre',serif;">"זֶה אֵלִי וְאַנְוֵהוּ"</p>
-                    <p class="text-taupe text-xs mt-2" style="font-family:'Assistant',sans-serif;">התנאה לפניו במצוות – שבת קלג</p>
-                </div>
+<!-- ======== PROCESS ======== -->
+<section id="process">
+    <div class="process-top reveal">
+        <div>
+            <span class="label">פשוט ומוקפד</span>
+            <h2>הזמנה אישית</h2>
+        </div>
+        <div class="gold-line"></div>
+    </div>
+
+    <div class="process-steps">
+        <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-ico">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                </svg>
             </div>
+            <div class="step-name">בחירת קונספט</div>
+            <div class="step-desc">בוחרים דגם, צבעים וסגנון עטרה מתוך הקולקציה</div>
+        </div>
+        <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-ico">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                </svg>
+            </div>
+            <div class="step-name">התאמה אישית</div>
+            <div class="step-desc">בוחרים כיתוב – פסוק, שם או הקדשה בכתב האדרת המיוחד</div>
+        </div>
+        <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-ico">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+            </div>
+            <div class="step-name">ייצור בוטיק</div>
+            <div class="step-desc">אנחנו רוקמים ותופרים את הטלית והתיק התואם בעבודת יד</div>
+        </div>
+        <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-ico">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                </svg>
+            </div>
+            <div class="step-name">משלוח עד הבית</div>
+            <div class="step-desc">הטלית מגיעה באריזה מהודרת, מוכנה לרגעים הגדולים של החיים</div>
         </div>
     </div>
 </section>
 
-<!-- ===================== COLLECTION ===================== -->
-<section id="collection" class="py-28 bg-warm-white section-fade">
-    <div class="max-w-6xl mx-auto px-6">
-
-        <div class="text-center mb-16">
-            <p class="text-gold text-xs tracking-[0.3em] uppercase mb-4" style="font-family:'Assistant',sans-serif;">הבחירה שלך</p>
-            <h2 class="text-4xl md:text-5xl font-bold text-charcoal mb-4" style="font-family:'Frank Ruhl Libre',serif;">הקולקציה שלנו</h2>
-            <div class="gold-divider mt-6 mb-0"></div>
-            <p class="text-charcoal/55 max-w-lg mx-auto mt-6 leading-relaxed" style="font-family:'Assistant',sans-serif;">
-                כל דגם מעוצב בקפידה עם בדים מובחרים ועטרות ייחודיות.<br>כל טלית ניתנת להתאמה אישית מלאה — שם, פסוק, צבע.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            <!-- Card 1 -->
-            <article class="product-card bg-white shadow-sm overflow-hidden">
-                <div class="overflow-hidden relative" style="height:300px;">
-                    <img class="card-img w-full h-full object-cover"
-                         src="https://images.unsplash.com/photo-1544441893-675973e31985?w=600&h=750&fit=crop&q=80"
-                         alt="דגם נחל נובע - טלית שחורה עם להבות"
-                         loading="lazy">
-                    <span class="badge absolute top-4 left-4 bg-charcoal text-gold px-3 py-1">bestseller</span>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-charcoal mb-1" style="font-family:'Frank Ruhl Libre',serif;">דגם "נחל נובע"</h3>
-                    <p class="text-taupe text-sm mb-3" style="font-family:'Assistant',sans-serif;">עטרה שחורה דרמטית עם עיטורי להבות</p>
-                    <p class="text-charcoal/55 text-sm leading-relaxed" style="font-family:'Assistant',sans-serif;">
-                        שילוב עוצמתי של לבן טהור ושחור עמוק. עיטורי אש חרוטים על בד ג'קוור יוקרתי. לחתן שרוצה להצהיר.
-                    </p>
-                    <div class="flex items-center justify-between mt-5 pt-5 border-t border-stone/20">
-                        <span class="text-2xl font-bold text-gold" style="font-family:'Frank Ruhl Libre',serif;">₪1,200</span>
-                        <a href="#contact" class="text-sm text-charcoal hover:text-gold transition-colors" style="font-family:'Assistant',sans-serif;">להזמנה ←</a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Card 2 -->
-            <article class="product-card bg-white shadow-sm overflow-hidden">
-                <div class="overflow-hidden relative" style="height:300px;">
-                    <img class="card-img w-full h-full object-cover"
-                         src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=750&fit=crop&q=80"
-                         alt="דגם אפור אורבני - טלית מינימליסטית"
-                         loading="lazy">
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-charcoal mb-1" style="font-family:'Frank Ruhl Libre',serif;">דגם "אפור אורבני"</h3>
-                    <p class="text-taupe text-sm mb-3" style="font-family:'Assistant',sans-serif;">מינימליסטי, נקי וחדשני</p>
-                    <p class="text-charcoal/55 text-sm leading-relaxed" style="font-family:'Assistant',sans-serif;">
-                        בגווני אפור-בטון וזית. מראה מינימליסטי ואורבני שמדבר בשקט. מתאים למי שמחפש ייחודיות בלי צעקות.
-                    </p>
-                    <div class="flex items-center justify-between mt-5 pt-5 border-t border-stone/20">
-                        <span class="text-2xl font-bold text-gold" style="font-family:'Frank Ruhl Libre',serif;">₪950</span>
-                        <a href="#contact" class="text-sm text-charcoal hover:text-gold transition-colors" style="font-family:'Assistant',sans-serif;">להזמנה ←</a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Card 3 -->
-            <article class="product-card bg-white shadow-sm overflow-hidden">
-                <div class="overflow-hidden relative" style="height:300px;">
-                    <img class="card-img w-full h-full object-cover"
-                         src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&h=750&fit=crop&q=80"
-                         alt="דגם מזמור לתודה - טלית לבנה עם רקמת זהב"
-                         loading="lazy">
-                    <span class="badge absolute top-4 left-4 bg-gold text-white px-3 py-1">חדש</span>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-charcoal mb-1" style="font-family:'Frank Ruhl Libre',serif;">דגם "מזמור לתודה"</h3>
-                    <p class="text-taupe text-sm mb-3" style="font-family:'Assistant',sans-serif;">פסוק רקום בעטרה מוזהבת</p>
-                    <p class="text-charcoal/55 text-sm leading-relaxed" style="font-family:'Assistant',sans-serif;">
-                        עיצוב רך ובהיר עם רקמת "מזמור לתודה" בזהב עדין. שדר של הכרת טוב ושמחה לרגע הגדול.
-                    </p>
-                    <div class="flex items-center justify-between mt-5 pt-5 border-t border-stone/20">
-                        <span class="text-2xl font-bold text-gold" style="font-family:'Frank Ruhl Libre',serif;">₪1,100</span>
-                        <a href="#contact" class="text-sm text-charcoal hover:text-gold transition-colors" style="font-family:'Assistant',sans-serif;">להזמנה ←</a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Card 4 -->
-            <article class="product-card bg-white shadow-sm overflow-hidden">
-                <div class="overflow-hidden relative" style="height:300px;">
-                    <img class="card-img w-full h-full object-cover"
-                         src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&h=750&fit=crop&q=80"
-                         alt="דגם האישי שלי - רקמה אישית על זמש"
-                         loading="lazy">
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-charcoal mb-1" style="font-family:'Frank Ruhl Libre',serif;">דגם "האישי שלי"</h3>
-                    <p class="text-taupe text-sm mb-3" style="font-family:'Assistant',sans-serif;">שם אישי בכתב קדושה מיוחד</p>
-                    <p class="text-charcoal/55 text-sm leading-relaxed" style="font-family:'Assistant',sans-serif;">
-                        רקמת שם אישי בכתב קדושה מיוחד על בדי זמש יוקרתיים. המתנה המושלמת שלא שוכחים.
-                    </p>
-                    <div class="flex items-center justify-between mt-5 pt-5 border-t border-stone/20">
-                        <span class="text-2xl font-bold text-gold" style="font-family:'Frank Ruhl Libre',serif;">₪850</span>
-                        <a href="#contact" class="text-sm text-charcoal hover:text-gold transition-colors" style="font-family:'Assistant',sans-serif;">להזמנה ←</a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Card 5 -->
-            <article class="product-card bg-white shadow-sm overflow-hidden">
-                <div class="overflow-hidden relative" style="height:300px;">
-                    <img class="card-img w-full h-full object-cover"
-                         src="https://images.unsplash.com/photo-1594938298603-d26c84a3c3f5?w=600&h=750&fit=crop&q=80&sat=-20&hue=220"
-                         alt="דגם חתן ספיר - טלית כחולה עם להבות לבנות"
-                         loading="lazy"
-                         style="filter: hue-rotate(200deg) saturate(0.7);">
-                    <span class="badge absolute top-4 left-4 bg-charcoal text-white px-3 py-1">מומלץ לחתן</span>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-charcoal mb-1" style="font-family:'Frank Ruhl Libre',serif;">דגם "חתן ספיר"</h3>
-                    <p class="text-taupe text-sm mb-3" style="font-family:'Assistant',sans-serif;">כחול נייבי עמוק עם עיטורי אש לבנים</p>
-                    <p class="text-charcoal/55 text-sm leading-relaxed" style="font-family:'Assistant',sans-serif;">
-                        קלאסי, יוקרתי ועוצמתי. עטרה בנייבי עם להבות לבנות בולטות — ייצוג של מלכות ורוחניות.
-                    </p>
-                    <div class="flex items-center justify-between mt-5 pt-5 border-t border-stone/20">
-                        <span class="text-2xl font-bold text-gold" style="font-family:'Frank Ruhl Libre',serif;">₪1,500</span>
-                        <a href="#contact" class="text-sm text-charcoal hover:text-gold transition-colors" style="font-family:'Assistant',sans-serif;">להזמנה ←</a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Card 6 -->
-            <article class="product-card bg-white shadow-sm overflow-hidden">
-                <div class="overflow-hidden relative" style="height:300px;">
-                    <img class="card-img w-full h-full object-cover"
-                         src="https://images.unsplash.com/photo-1558171813-dc8671c82f7f?w=600&h=750&fit=crop&q=80"
-                         alt="דגם חום מלכותי - ג׳קוור נחושת עם להבות"
-                         loading="lazy">
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-charcoal mb-1" style="font-family:'Frank Ruhl Libre',serif;">דגם "חום מלכותי"</h3>
-                    <p class="text-taupe text-sm mb-3" style="font-family:'Assistant',sans-serif;">ג׳קוור נחושת עם עיטורי להבות</p>
-                    <p class="text-charcoal/55 text-sm leading-relaxed" style="font-family:'Assistant',sans-serif;">
-                        חמים, אדמתי ובוגר. עטרה בגוון חום-נחושת מחומם עם ג'קוור אש. לאיש שיודע בדיוק מה הוא רוצה.
-                    </p>
-                    <div class="flex items-center justify-between mt-5 pt-5 border-t border-stone/20">
-                        <span class="text-2xl font-bold text-gold" style="font-family:'Frank Ruhl Libre',serif;">₪750</span>
-                        <a href="#contact" class="text-sm text-charcoal hover:text-gold transition-colors" style="font-family:'Assistant',sans-serif;">להזמנה ←</a>
-                    </div>
-                </div>
-            </article>
-
-        </div>
-
-        <div class="text-center mt-14">
-            <p class="text-charcoal/40 text-sm mb-5" style="font-family:'Assistant',sans-serif;">
-                כל הדגמים זמינים בהתאמה אישית מלאה · ניתן לרכוש עם תיק ו/או סידור תואמים
-            </p>
-            <a href="#contact"
-               class="inline-flex items-center gap-2 px-9 py-3.5 border border-charcoal/70 text-charcoal hover:bg-charcoal hover:text-white transition-colors duration-300 text-sm"
-               style="font-family:'Assistant',sans-serif;">
-                לכל הקולקציה וסגנונות נוספים →
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- ===================== HOW IT WORKS ===================== -->
-<section id="process" class="py-28 bg-charcoal section-fade">
-    <div class="max-w-6xl mx-auto px-6">
-
-        <div class="text-center mb-20">
-            <p class="text-gold text-xs tracking-[0.3em] uppercase mb-4" style="font-family:'Assistant',sans-serif;">פשוט ומוקפד</p>
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4" style="font-family:'Frank Ruhl Libre',serif;">הזמנה אישית</h2>
-            <div class="gold-divider mt-6"></div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
-
-            <div class="text-center">
-                <div class="step-number">01</div>
-                <div class="w-14 h-14 mx-auto my-4 border border-gold/35 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
-                    </svg>
-                </div>
-                <h3 class="text-white font-semibold mb-2" style="font-family:'Frank Ruhl Libre',serif; font-size:1.15rem;">בחירת קונספט</h3>
-                <p class="text-stone/60 text-sm leading-relaxed" style="font-family:'Assistant',sans-serif;">
-                    בוחרים דגם, צבעים וסגנון עטרה מתוך הקולקציה
-                </p>
-            </div>
-
-            <div class="text-center">
-                <div class="step-number">02</div>
-                <div class="w-14 h-14 mx-auto my-4 border border-gold/35 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-                    </svg>
-                </div>
-                <h3 class="text-white font-semibold mb-2" style="font-family:'Frank Ruhl Libre',serif; font-size:1.15rem;">התאמה אישית</h3>
-                <p class="text-stone/60 text-sm leading-relaxed" style="font-family:'Assistant',sans-serif;">
-                    בוחרים כיתוב – פסוק, שם או הקדשה בכתב ה"אדרת" המיוחד
-                </p>
-            </div>
-
-            <div class="text-center">
-                <div class="step-number">03</div>
-                <div class="w-14 h-14 mx-auto my-4 border border-gold/35 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                    </svg>
-                </div>
-                <h3 class="text-white font-semibold mb-2" style="font-family:'Frank Ruhl Libre',serif; font-size:1.15rem;">ייצור בוטיק</h3>
-                <p class="text-stone/60 text-sm leading-relaxed" style="font-family:'Assistant',sans-serif;">
-                    אנחנו רוקמים ותופרים את הטלית והתיק התואם בעבודת יד
-                </p>
-            </div>
-
-            <div class="text-center">
-                <div class="step-number">04</div>
-                <div class="w-14 h-14 mx-auto my-4 border border-gold/35 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                    </svg>
-                </div>
-                <h3 class="text-white font-semibold mb-2" style="font-family:'Frank Ruhl Libre',serif; font-size:1.15rem;">משלוח עד הבית</h3>
-                <p class="text-stone/60 text-sm leading-relaxed" style="font-family:'Assistant',sans-serif;">
-                    הטלית מגיעה באריזה מהודרת, מוכנה לרגעים הגדולים של החיים
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ===================== TESTIMONIAL ===================== -->
-<section class="py-24 bg-cream section-fade">
-    <div class="max-w-3xl mx-auto px-6 text-center">
-        <div class="text-7xl text-gold/25 leading-none mb-6" style="font-family:'Frank Ruhl Libre',serif;">"</div>
-        <p class="text-2xl md:text-[1.85rem] text-charcoal leading-relaxed mb-10 font-light"
-           style="font-family:'Frank Ruhl Libre',serif;">
-            הטלית שלי מאדרת הייתה הפריט הכי מיוחד ביום החתונה שלי.<br>כולם שאלו מאיפה זה. הרגשתי מלך.
+<!-- ======== TESTIMONIAL ======== -->
+<section class="testi reveal">
+    <div class="testi-inner">
+        <div class="testi-qmark">"</div>
+        <p class="testi-text">
+            הטלית שלי מאדרת הייתה הפריט הכי מיוחד ביום החתונה שלי.<br>
+            כולם שאלו מאיפה זה. הרגשתי מלך.
         </p>
-        <div class="gold-divider mb-6"></div>
-        <p class="text-taupe text-sm" style="font-family:'Assistant',sans-serif;">— יוסף ל., חתן מרוצה, תל אביב</p>
+        <div class="gold-line" style="margin:0 auto;"></div>
+        <div class="testi-auth">— יוסף ל., חתן מרוצה, תל אביב</div>
     </div>
 </section>
 
-<!-- ===================== CONTACT ===================== -->
-<section id="contact" class="py-28 bg-warm-white section-fade">
-    <div class="max-w-6xl mx-auto px-6">
+<!-- ======== CONTACT ======== -->
+<section id="contact">
+    <div class="contact-grid">
 
-        <div class="grid md:grid-cols-2 gap-20 items-start">
-
-            <!-- Info -->
-            <div>
-                <p class="text-gold text-xs tracking-[0.3em] uppercase mb-4" style="font-family:'Assistant',sans-serif;">בואו נדבר</p>
-                <h2 class="text-4xl md:text-5xl font-bold text-charcoal mb-5 leading-tight" style="font-family:'Frank Ruhl Libre',serif;">יצירת קשר</h2>
-                <div class="mb-8" style="width:60px; height:1px; background:linear-gradient(to left, transparent, #B8956A, transparent);"></div>
-
-                <p class="text-charcoal/65 mb-10 leading-relaxed" style="font-family:'Assistant',sans-serif; font-size:1.05rem;">
-                    רוצים להזמין טלית מותאמת אישית? פשוט שלחו לנו הודעה בוואטסאפ ונחזור אליכם תוך 24 שעות עם כל הפרטים.
-                </p>
-
-                <a href="https://wa.me/972500000000?text=שלום,%20אני%20מעוניין%20להזמין%20טלית%20מאדרת"
-                   target="_blank"
-                   class="whatsapp-btn inline-flex items-center gap-3 px-8 py-4 text-white font-semibold text-base shadow-md"
-                   style="font-family:'Assistant',sans-serif;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        <div class="contact-info reveal">
+            <span class="label">בואו נדבר</span>
+            <h2>יצירת קשר</h2>
+            <div class="gold-line" style="margin-bottom:32px;"></div>
+            <p>רוצים להזמין טלית מותאמת אישית? שלחו לנו הודעה בוואטסאפ ונחזור אליכם תוך 24 שעות עם כל הפרטים.</p>
+            <a href="https://wa.me/972500000000?text=שלום,%20אני%20מעוניין%20להזמין%20טלית%20מאדרת"
+               target="_blank" class="btn-wa">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                שלחו הודעה בוואטסאפ
+            </a>
+            <div class="social-bar">
+                <span class="social-lbl">עקבו אחרינו:</span>
+                <a href="#" class="social-ico" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                     </svg>
-                    שלחו הודעה בוואטסאפ
                 </a>
-
-                <div class="flex items-center gap-5 mt-10">
-                    <p class="text-charcoal/40 text-sm" style="font-family:'Assistant',sans-serif;">עקבו אחרינו:</p>
-                    <!-- Instagram -->
-                    <a href="#" aria-label="Instagram"
-                       class="w-10 h-10 border border-stone/30 flex items-center justify-center hover:border-gold hover:text-gold transition-colors text-charcoal/50">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                    </a>
-                    <!-- Facebook -->
-                    <a href="#" aria-label="Facebook"
-                       class="w-10 h-10 border border-stone/30 flex items-center justify-center hover:border-gold hover:text-gold transition-colors text-charcoal/50">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                        </svg>
-                    </a>
-                    <!-- TikTok -->
-                    <a href="#" aria-label="TikTok"
-                       class="w-10 h-10 border border-stone/30 flex items-center justify-center hover:border-gold hover:text-gold transition-colors text-charcoal/50">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.67a8.26 8.26 0 004.84 1.56V6.78a4.85 4.85 0 01-1.07-.09z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Form -->
-            <div class="bg-cream p-8 md:p-10">
-                <h3 class="text-xl font-bold text-charcoal mb-6" style="font-family:'Frank Ruhl Libre',serif;">שלחו פרטים ונחזור אליכם</h3>
-                <form class="space-y-4" onsubmit="handleFormSubmit(event)">
-                    <div>
-                        <label class="block text-sm text-charcoal/65 mb-1.5" style="font-family:'Assistant',sans-serif;">שם מלא</label>
-                        <input type="text" placeholder="ישראל ישראלי" required
-                               class="w-full px-4 py-3 bg-white border border-stone/30 focus:outline-none focus:border-gold text-charcoal text-sm transition-colors"
-                               style="font-family:'Assistant',sans-serif;"/>
-                    </div>
-                    <div>
-                        <label class="block text-sm text-charcoal/65 mb-1.5" style="font-family:'Assistant',sans-serif;">מספר טלפון</label>
-                        <input type="tel" placeholder="050-0000000" required
-                               class="w-full px-4 py-3 bg-white border border-stone/30 focus:outline-none focus:border-gold text-charcoal text-sm transition-colors"
-                               style="font-family:'Assistant',sans-serif;" dir="ltr"/>
-                    </div>
-                    <div>
-                        <label class="block text-sm text-charcoal/65 mb-1.5" style="font-family:'Assistant',sans-serif;">סוג האירוע</label>
-                        <select class="w-full px-4 py-3 bg-white border border-stone/30 focus:outline-none focus:border-gold text-charcoal text-sm transition-colors"
-                                style="font-family:'Assistant',sans-serif;">
-                            <option value="">בחרו...</option>
-                            <option value="wedding">חתונה</option>
-                            <option value="barmitzvah">בר מצווה</option>
-                            <option value="gift">מתנה</option>
-                            <option value="personal">שימוש אישי</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm text-charcoal/65 mb-1.5" style="font-family:'Assistant',sans-serif;">הערות / בקשות מיוחדות</label>
-                        <textarea rows="3" placeholder="ספרו לנו על החזון שלכם..."
-                                  class="w-full px-4 py-3 bg-white border border-stone/30 focus:outline-none focus:border-gold text-charcoal text-sm resize-none transition-colors"
-                                  style="font-family:'Assistant',sans-serif;"></textarea>
-                    </div>
-                    <button type="submit"
-                            class="w-full py-4 bg-charcoal text-white hover:bg-gold transition-colors duration-300 text-sm tracking-wide"
-                            style="font-family:'Assistant',sans-serif;">
-                        שלחו פנייה
-                    </button>
-                    <p id="form-success" class="hidden text-center text-sm text-olive pt-1" style="font-family:'Assistant',sans-serif;">
-                        תודה! נחזור אליכם בהקדם.
-                    </p>
-                </form>
+                <a href="#" class="social-ico" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-ico" aria-label="TikTok">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.67a8.26 8.26 0 004.84 1.56V6.78a4.85 4.85 0 01-1.07-.09z"/>
+                    </svg>
+                </a>
             </div>
         </div>
+
+        <div class="contact-form reveal">
+            <h3>שלחו פרטים ונחזור אליכם</h3>
+            <form onsubmit="handleSend(event)">
+                <div class="field">
+                    <label>שם מלא</label>
+                    <input type="text" placeholder="ישראל ישראלי" required>
+                </div>
+                <div class="field">
+                    <label>מספר טלפון</label>
+                    <input type="tel" placeholder="050-0000000" required dir="ltr">
+                </div>
+                <div class="field">
+                    <label>סוג האירוע</label>
+                    <select>
+                        <option value="">בחרו...</option>
+                        <option>חתונה</option>
+                        <option>בר מצווה</option>
+                        <option>מתנה</option>
+                        <option>שימוש אישי</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>הערות / בקשות מיוחדות</label>
+                    <textarea rows="3" placeholder="ספרו לנו על החזון שלכם..."></textarea>
+                </div>
+                <button type="submit" class="btn-send">שלחו פנייה</button>
+                <p class="form-ok" id="form-ok">תודה! נחזור אליכם בהקדם.</p>
+            </form>
+        </div>
+
     </div>
 </section>
 
-<!-- ===================== FOOTER ===================== -->
-<footer class="bg-charcoal text-stone/50 py-14">
-    <div class="max-w-6xl mx-auto px-6">
-        <div class="text-center mb-8">
-            <div class="text-4xl font-bold text-white mb-1" style="font-family:'Frank Ruhl Libre',serif;">אדרת</div>
-            <div class="text-gold text-xs tracking-widest" style="font-family:'Assistant',sans-serif;">קדושה בסטייל</div>
-        </div>
-        <div class="gold-divider mb-8"></div>
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p class="text-xs" style="font-family:'Assistant',sans-serif;">© 2026 אדרת - קדושה בסטייל. כל הזכויות שמורות.</p>
-            <nav class="flex gap-7 text-xs">
-                <a href="#hero"       class="hover:text-gold transition-colors" style="font-family:'Assistant',sans-serif;">דף הבית</a>
-                <a href="#collection" class="hover:text-gold transition-colors" style="font-family:'Assistant',sans-serif;">קולקציה</a>
-                <a href="#about"      class="hover:text-gold transition-colors" style="font-family:'Assistant',sans-serif;">מי אנחנו</a>
-                <a href="#contact"    class="hover:text-gold transition-colors" style="font-family:'Assistant',sans-serif;">צור קשר</a>
+<!-- ======== FOOTER ======== -->
+<footer>
+    <div class="foot-inner">
+        <div class="foot-top">
+            <div class="foot-brand">
+                <div class="wm">אדרת</div>
+                <div class="tg">קדושה בסטייל</div>
+            </div>
+            <nav class="foot-nav">
+                <a href="#hero">דף הבית</a>
+                <a href="#collection">קולקציה</a>
+                <a href="#about">מי אנחנו</a>
+                <a href="#contact">צור קשר</a>
             </nav>
+        </div>
+        <div class="foot-bottom">
+            <p class="foot-copy">© 2026 אדרת — קדושה בסטייל. כל הזכויות שמורות.</p>
+            <div class="gold-line"></div>
         </div>
     </div>
 </footer>
 
-<!-- Floating WhatsApp -->
+<!-- ======== FLOATING WA ======== -->
 <a href="https://wa.me/972500000000?text=שלום,%20אני%20מעוניין%20להזמין%20טלית%20מאדרת"
-   target="_blank"
-   aria-label="WhatsApp"
-   class="whatsapp-btn fixed bottom-6 left-6 z-50 w-14 h-14 flex items-center justify-center shadow-xl">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+   target="_blank" class="wa-float" aria-label="WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" viewBox="0 0 24 24">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
 </a>
 
 <script>
-    // Mobile menu
-    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-        document.getElementById('mobile-menu').classList.toggle('hidden');
+    // Header scroll
+    const hdr = document.getElementById('header');
+    const hamIco = document.getElementById('ham-ico');
+    window.addEventListener('scroll', () => {
+        const s = window.scrollY > 55;
+        hdr.classList.toggle('scrolled', s);
+        if (hamIco) hamIco.setAttribute('stroke', s ? '#1A1A1A' : 'white');
     });
-    function closeMobileMenu() {
-        document.getElementById('mobile-menu').classList.add('hidden');
+
+    // Mobile nav
+    function toggleMob() {
+        document.getElementById('mob-nav').classList.toggle('open');
     }
 
-    // Scroll-reveal
-    const observer = new IntersectionObserver((entries) => {
+    // Scroll reveal
+    const ro = new IntersectionObserver(entries => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.section-fade').forEach(el => observer.observe(el));
+    }, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', e => {
-            e.preventDefault();
             const t = document.querySelector(a.getAttribute('href'));
-            if (t) window.scrollTo({ top: t.offsetTop - 78, behavior: 'smooth' });
+            if (!t) return;
+            e.preventDefault();
+            window.scrollTo({ top: t.offsetTop - 70, behavior: 'smooth' });
         });
     });
 
-    // Header shadow on scroll
-    window.addEventListener('scroll', () => {
-        document.getElementById('main-header').style.boxShadow =
-            window.scrollY > 40 ? '0 2px 24px rgba(0,0,0,0.07)' : 'none';
-    });
-
-    // Form submit
-    function handleFormSubmit(e) {
+    // Form
+    function handleSend(e) {
         e.preventDefault();
-        document.getElementById('form-success').classList.remove('hidden');
+        const ok = document.getElementById('form-ok');
+        ok.style.display = 'block';
         e.target.reset();
-        setTimeout(() => document.getElementById('form-success').classList.add('hidden'), 4000);
+        setTimeout(() => { ok.style.display = 'none'; }, 4200);
     }
 </script>
 </body>
