@@ -173,17 +173,18 @@
             min-height: 700px;
             overflow: hidden;
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             justify-content: center;
         }
 
         .hero-bg {
             position: absolute;
             inset: 0;
-            background-color: #141412;
+            background-color: #181714;
             background-image:
-                radial-gradient(ellipse at 70% 45%, rgba(196,153,90,0.13) 0%, transparent 58%),
-                radial-gradient(ellipse at 15% 70%, rgba(196,153,90,0.06) 0%, transparent 45%);
+                linear-gradient(45deg, rgba(196,153,90,0.07) 1px, transparent 1px),
+                linear-gradient(-45deg, rgba(196,153,90,0.07) 1px, transparent 1px);
+            background-size: 38px 38px;
         }
         .hero-bg img {
             position: absolute;
@@ -198,27 +199,21 @@
             position: absolute; inset: 0;
             background: linear-gradient(
                 to bottom,
-                rgba(0,0,0,0.25) 0%,
-                rgba(0,0,0,0.05) 35%,
-                rgba(0,0,0,0.05) 50%,
-                rgba(0,0,0,0.78) 100%
+                rgba(0,0,0,0.18) 0%,
+                rgba(0,0,0,0.0)  30%,
+                rgba(0,0,0,0.0)  60%,
+                rgba(0,0,0,0.55) 100%
             );
         }
 
         .hero-body {
             position: relative; z-index: 2;
             text-align: center;
-            padding: 0 24px 96px;
+            padding: 100px 24px 0;
             width: 100%; max-width: 920px;
         }
 
-        .hero-eyebrow { color: rgba(212,180,122,0.9); margin-bottom: 20px; }
-
-        .hero-vert-line {
-            width: 1px; height: 52px;
-            background: linear-gradient(to bottom, transparent, var(--bronze), transparent);
-            margin: 0 auto 28px;
-        }
+        .hero-eyebrow { color: rgba(212,180,122,0.9); margin-bottom: 28px; }
 
         .hero-title {
             font-size: clamp(6rem, 15vw, 12rem);
@@ -228,21 +223,44 @@
             letter-spacing: 0.02em;
         }
 
+        .hero-divider {
+            width: 64px; height: 1px;
+            background: linear-gradient(to left, transparent, var(--bronze), transparent);
+            margin: 24px auto 22px;
+        }
+
         .hero-tagline {
             font-size: clamp(1.1rem, 2.2vw, 1.8rem);
             font-weight: 300;
-            color: rgba(255,255,255,0.78);
-            margin-top: 18px;
+            color: rgba(255,255,255,0.82);
             letter-spacing: 0.12em;
+            margin-bottom: 18px;
         }
 
-        .hero-vert-line-bottom {
-            width: 1px; height: 40px;
-            background: linear-gradient(to bottom, var(--bronze), transparent);
-            margin: 28px auto;
+        .hero-desc {
+            font-size: 0.94rem;
+            color: rgba(255,255,255,0.62);
+            letter-spacing: 0.04em;
+            line-height: 1.8;
+            margin-bottom: 36px;
         }
 
         .hero-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 38px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            color: rgba(196,153,90,0.65);
+            animation: scrollBounce 2s ease-in-out infinite;
+        }
+        .hero-scroll svg { display: block; }
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50%       { transform: translateX(-50%) translateY(7px); }
+        }
 
         .btn-bronze {
             display: inline-flex; align-items: center; gap: 8px;
@@ -765,6 +783,7 @@
 
     <nav>
         <ul class="nav-list">
+            <li><a href="#hero">דף הבית</a></li>
             <li><a href="#collection">קולקציה</a></li>
             <li><a href="#about">מי אנחנו</a></li>
             <li><a href="#contact">צור קשר</a></li>
@@ -793,14 +812,20 @@
 
     <div class="hero-body">
         <span class="label hero-eyebrow ha1">עיצוב טליתות בוטיק &nbsp;·&nbsp; ישראל</span>
-        <div class="hero-vert-line ha1"></div>
         <h1 class="hero-title ha2">אדרת</h1>
+        <div class="hero-divider ha2"></div>
         <p class="hero-tagline ha3">קדושה בסטייל</p>
-        <div class="hero-vert-line-bottom ha3"></div>
+        <p class="hero-desc ha3">טליתות מעוצבות בהתאמה אישית, ברמת גימור שטרם הכרתם.</p>
         <div class="hero-btns ha3">
             <a href="#collection" class="btn-bronze">לצפייה בקולקציה</a>
-            <a href="#contact"    class="btn-ghost">הזמנה אישית</a>
+            <a href="#contact"    class="btn-ghost">לצור קשר</a>
         </div>
+    </div>
+
+    <div class="hero-scroll">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+        </svg>
     </div>
 </section>
 
