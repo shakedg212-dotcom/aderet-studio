@@ -10,6 +10,8 @@ create table if not exists public.products (
   is_active boolean not null default true
 );
 
+create unique index if not exists idx_products_name_he_unique on public.products(name_he);
+
 -- ORDERS
 create table if not exists public.orders (
   id uuid primary key default gen_random_uuid(),
@@ -66,10 +68,17 @@ using (is_active = true);
 -- Do not allow anon access to orders/shipments by default.
 -- Server-side API uses SUPABASE_SERVICE_ROLE_KEY.
 
--- Seed examples in Hebrew
+-- Seed products in Hebrew (full website catalog)
 insert into public.products (name_he, price_ils, image_url, is_active)
 values
   ('דגם נחל נובע', 1200, '/images/collection-1.png', true),
   ('דגם אפור אורבני', 950, '/images/collection-2.png', true),
+  ('דגם מזמור לתודה', 1100, '/images/collection-3.png', true),
+  ('דגם האישי שלי', 850, '/images/collection-4.png', true),
+  ('דגם חתן ספיר', 1500, '/images/collection-5.png', true),
   ('דגם חום מלכותי', 750, '/images/collection-6.png', true)
-on conflict do nothing;
+on conflict (name_he) do update
+set
+  price_ils = excluded.price_ils,
+  image_url = excluded.image_url,
+  is_active = excluded.is_active;

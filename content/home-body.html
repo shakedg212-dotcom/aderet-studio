@@ -111,7 +111,7 @@
     <div class="lbgrid">
 
         <!-- A — tall left -->
-        <article class="pcard pc-a">
+        <article class="pcard pc-a" data-product-name="דגם נחל נובע">
             <img class="pcard-img"
                  src="images/collection-1.png"
                  alt="דגם נחל נובע — בד לבן מובחר" loading="lazy">
@@ -121,11 +121,12 @@
                 <div class="pcard-name">דגם "נחל נובע"</div>
                 <div class="pcard-sub">עטרה שחורה דרמטית · עיטורי להבות</div>
                 <div class="pcard-price">₪1,200</div>
+                <button class="pcard-order-btn" type="button">להזמנה</button>
             </div>
         </article>
 
         <!-- B — wide top right -->
-        <article class="pcard pc-b">
+        <article class="pcard pc-b" data-product-name="דגם אפור אורבני">
             <img class="pcard-img"
                  src="images/collection-2.png"
                  alt="דגם אפור אורבני — אבן אפורה מינימליסטית" loading="lazy">
@@ -134,11 +135,12 @@
                 <div class="pcard-name">דגם "אפור אורבני"</div>
                 <div class="pcard-sub">מינימליסטי · נקי · חדשני</div>
                 <div class="pcard-price">₪950</div>
+                <button class="pcard-order-btn" type="button">להזמנה</button>
             </div>
         </article>
 
         <!-- C — mid right -->
-        <article class="pcard pc-c">
+        <article class="pcard pc-c" data-product-name="דגם מזמור לתודה">
             <img class="pcard-img"
                  src="images/collection-3.png"
                  alt="דגם מזמור לתודה — פרט רקמה" loading="lazy">
@@ -148,11 +150,12 @@
                 <div class="pcard-name">דגם "מזמור לתודה"</div>
                 <div class="pcard-sub">רקמת זהב עדינה</div>
                 <div class="pcard-price">₪1,100</div>
+                <button class="pcard-order-btn" type="button">להזמנה</button>
             </div>
         </article>
 
         <!-- D — mid far right -->
-        <article class="pcard pc-d">
+        <article class="pcard pc-d" data-product-name="דגם האישי שלי">
             <img class="pcard-img"
                  src="images/collection-4.png"
                  alt="דגם האישי שלי — זמש כהה" loading="lazy">
@@ -161,11 +164,12 @@
                 <div class="pcard-name">דגם "האישי שלי"</div>
                 <div class="pcard-sub">זמש יוקרתי · שם אישי</div>
                 <div class="pcard-price">₪850</div>
+                <button class="pcard-order-btn" type="button">להזמנה</button>
             </div>
         </article>
 
         <!-- E — wide bottom left -->
-        <article class="pcard pc-e">
+        <article class="pcard pc-e" data-product-name="דגם חתן ספיר">
             <img class="pcard-img"
                  src="images/collection-5.png"
                  alt="דגם חתן ספיר — בד לבן זורם" loading="lazy">
@@ -175,11 +179,12 @@
                 <div class="pcard-name">דגם "חתן ספיר"</div>
                 <div class="pcard-sub">טקסטיל לבן מהודר · עיטורי פס כחול</div>
                 <div class="pcard-price">₪1,500</div>
+                <button class="pcard-order-btn" type="button">להזמנה</button>
             </div>
         </article>
 
         <!-- F — bottom right -->
-        <article class="pcard pc-f">
+        <article class="pcard pc-f" data-product-name="דגם חום מלכותי">
             <img class="pcard-img"
                  src="images/collection-6.png"
                  alt="דגם חום מלכותי — עור ונחושת" loading="lazy">
@@ -188,6 +193,7 @@
                 <div class="pcard-name">דגם "חום מלכותי"</div>
                 <div class="pcard-sub">ג'קוור נחושת · להבות</div>
                 <div class="pcard-price">₪750</div>
+                <button class="pcard-order-btn" type="button">להזמנה</button>
             </div>
         </article>
 
@@ -198,6 +204,52 @@
         <a href="#contact" class="btn-outline-dark">לכל הקולקציה וסגנונות נוספים ←</a>
     </div>
 </section>
+
+<!-- ======== ORDER MODAL ======== -->
+<div id="order-modal" class="order-modal" aria-hidden="true">
+    <div class="order-modal__overlay" data-close-order-modal></div>
+    <div class="order-modal__panel" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
+        <button type="button" class="order-modal__close" data-close-order-modal aria-label="סגירת חלון">✕</button>
+        <h3 id="order-modal-title">הזמנה מהירה</h3>
+        <p class="order-modal__subtitle">מלאו את הפרטים ונשמור הזמנה במערכת.</p>
+
+        <div class="order-modal__summary">
+            <div class="order-line"><span>מוצר</span><strong id="order-product-name">—</strong></div>
+            <div class="order-line"><span>מחיר מוצר</span><strong id="order-product-price">₪0</strong></div>
+            <div class="order-line"><span>משלוח</span><strong id="order-shipping">₪0</strong></div>
+            <div class="order-line total"><span>סה"כ לתשלום</span><strong id="order-total">₪0</strong></div>
+        </div>
+
+        <form id="order-form" class="order-form">
+            <div class="order-grid">
+                <div class="field"><label>שם פרטי *</label><input id="order-first-name" type="text" required></div>
+                <div class="field"><label>שם משפחה *</label><input id="order-last-name" type="text" required></div>
+            </div>
+            <div class="field"><label>טלפון *</label><input id="order-phone" type="tel" required dir="ltr" pattern="[0-9+\\-\\s]{9,20}"></div>
+            <div class="order-grid">
+                <div class="field"><label>רחוב *</label><input id="order-street" type="text" required></div>
+                <div class="field"><label>מספר בית *</label><input id="order-house-number" type="text" required></div>
+            </div>
+            <div class="order-grid">
+                <div class="field">
+                    <label>עיר *</label>
+                    <input id="order-city" type="text" list="order-city-options" required autocomplete="off">
+                    <datalist id="order-city-options"></datalist>
+                </div>
+                <div class="field"><label>קומה</label><input id="order-floor" type="text"></div>
+            </div>
+            <div class="order-grid">
+                <div class="field"><label>מיקוד</label><input id="order-zip-code" type="text" dir="ltr"></div>
+            </div>
+            <div class="field"><label>הוראות למסירה</label><textarea id="order-delivery-instructions" rows="2"></textarea></div>
+            <div class="field"><label>הערות</label><textarea id="order-notes" rows="2"></textarea></div>
+
+            <button type="submit" class="btn-bronze order-submit-btn">שליחת הזמנה</button>
+            <p class="order-msg order-msg--ok" id="order-ok">ההזמנה נשמרה בהצלחה. נחזור אליכם בהקדם.</p>
+            <p class="order-msg order-msg--err" id="order-err"></p>
+        </form>
+    </div>
+</div>
 
 <!-- ======== ABOUT ======== -->
 <section id="about">
