@@ -9,6 +9,12 @@ export const updateSession = async (request) => {
     request,
   });
 
+  // In environments where Supabase env vars are not configured yet (e.g. first Vercel deploy),
+  // skip session refresh instead of crashing the whole site in middleware.
+  if (!supabaseUrl || !supabaseKey) {
+    return response;
+  }
+
   const supabase = createServerClient(supabaseUrl, supabaseKey, {
     cookies: {
       getAll() {
