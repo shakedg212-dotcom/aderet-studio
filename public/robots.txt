@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shakedg212-dotcom.github.io/aderet-studio/sitemap.xml
