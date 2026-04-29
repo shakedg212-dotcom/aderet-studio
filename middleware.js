@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 
-export async function middleware(request) {
-  // Temporary safe mode for production stability:
-  // keep middleware as pass-through until auth/session middleware is reintroduced.
-  return NextResponse.next({ request });
+export function middleware() {
+  // Absolute safe mode: no request mutation, pass-through only.
+  return NextResponse.next();
 }
 
 export const config = {
