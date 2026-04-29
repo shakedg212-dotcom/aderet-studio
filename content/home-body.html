@@ -1,10 +1,10 @@
 <!-- ======== MOBILE NAV ======== -->
 <div id="mob-nav">
     <button class="mob-close" onclick="toggleMob()">✕</button>
-    <a href="#hero"       onclick="toggleMob()">דף הבית</a>
-    <a href="#collection" onclick="toggleMob()">קולקציה</a>
-    <a href="#about"      onclick="toggleMob()">מי אנחנו</a>
-    <a href="#contact"    onclick="toggleMob()">צור קשר</a>
+    <a href="#hero" id="mob-nav-home" onclick="toggleMob()">דף הבית</a>
+    <a href="#collection" id="mob-nav-collection" onclick="toggleMob()">קולקציה</a>
+    <a href="#about" id="mob-nav-about" onclick="toggleMob()">מי אנחנו</a>
+    <a href="#contact" id="mob-nav-contact" onclick="toggleMob()">צור קשר</a>
 </div>
 
 <!-- ======== HEADER ======== -->
@@ -16,14 +16,19 @@
 
     <nav>
         <ul class="nav-list">
-            <li><a href="#hero">דף הבית</a></li>
-            <li><a href="#collection">קולקציה</a></li>
-            <li><a href="#about">מי אנחנו</a></li>
-            <li><a href="#contact">צור קשר</a></li>
+            <li><a id="nav-home" href="#hero">דף הבית</a></li>
+            <li><a id="nav-collection" href="#collection">קולקציה</a></li>
+            <li><a id="nav-about" href="#about">מי אנחנו</a></li>
+            <li><a id="nav-contact" href="#contact">צור קשר</a></li>
         </ul>
     </nav>
 
-    <a href="#contact" class="nav-cta">הזמן עכשיו</a>
+    <a href="#contact" id="nav-cta" class="nav-cta">הזמן עכשיו</a>
+
+    <button id="lang-toggle" class="lang-toggle" type="button" aria-label="החלפת שפה">
+        <span id="lang-flag" class="lang-toggle__flag">🇮🇱</span>
+        <span id="lang-label" class="lang-toggle__label">עברית</span>
+    </button>
 
     <button id="mob-btn" onclick="toggleMob()" aria-label="תפריט">
         <svg id="ham-ico" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24">
@@ -44,17 +49,17 @@
     <div class="hero-grad"></div>
 
     <div class="hero-body">
-        <span class="label hero-eyebrow ha1">עיצוב טליתות בוטיק &nbsp;·&nbsp; ישראל</span>
+        <span id="hero-eyebrow" class="label hero-eyebrow ha1">עיצוב טליתות בוטיק &nbsp;·&nbsp; ישראל</span>
         <div class="hero-logo-wrap ha2">
             <img class="hero-logo" src="images/logo-mark-only.png" alt="לוגו אדרת">
         </div>
         <div class="hero-logo-divider ha2"></div>
         <h1 class="visually-hidden">אדרת - קדושה בסטייל</h1>
-        <p class="hero-tagline ha3">קדושה בסטייל</p>
-        <p class="hero-desc ha3">טליתות מעוצבות בהתאמה אישית, ברמת גימור שטרם הכרתם.</p>
+        <p id="hero-tagline" class="hero-tagline ha3">קדושה בסטייל</p>
+        <p id="hero-desc" class="hero-desc ha3">טליתות מעוצבות בהתאמה אישית, ברמת גימור שטרם הכרתם.</p>
         <div class="hero-btns ha3">
-            <a href="#collection" class="btn-bronze">לצפייה בקולקציה</a>
-            <a href="#contact"    class="btn-ghost">לצור קשר</a>
+            <a id="hero-cta-collection" href="#collection" class="btn-bronze">לצפייה בקולקציה</a>
+            <a id="hero-cta-contact" href="#contact" class="btn-ghost">לצור קשר</a>
         </div>
     </div>
 
@@ -93,19 +98,19 @@
 
 <!-- ======== MANIFESTO ======== -->
 <div class="manifesto reveal">
-    <span class="label" style="margin-bottom:24px;">הפילוסופיה שלנו</span>
+    <span id="manifesto-label" class="label" style="margin-bottom:24px;">הפילוסופיה שלנו</span>
     <div class="gold-line" style="margin:0 auto 40px;"></div>
-    <h2>קדושה וסטייל אינם שני עולמות נפרדים —<br>הם <em>משלימים זה את זה</em>.</h2>
-    <p>כל טלית אדרת היא יצירת אמנות של ממש. מבדים מובחרים, דרך עטרות מעוצבות ועד לרקמה אישית — הידור שלא מוותר על דבר.</p>
+    <h2 id="manifesto-title">קדושה וסטייל אינם שני עולמות נפרדים —<br>הם <em>משלימים זה את זה</em>.</h2>
+    <p id="manifesto-desc">כל טלית אדרת היא יצירת אמנות של ממש. מבדים מובחרים, דרך עטרות מעוצבות ועד לרקמה אישית — הידור שלא מוותר על דבר.</p>
 </div>
 
 <!-- ======== COLLECTION ======== -->
 <section id="collection">
     <div class="sec-head reveal">
-        <span class="label">הקולקציה שלנו</span>
+        <span id="collection-label" class="label">הקולקציה שלנו</span>
         <div class="gold-line" style="margin:16px auto;"></div>
-        <h2>בחרו את הטלית שלכם</h2>
-        <p>כל דגם זמין בהתאמה אישית מלאה — שם, פסוק, צבע וסגנון עטרה.</p>
+        <h2 id="collection-title">בחרו את הטלית שלכם</h2>
+        <p id="collection-desc">כל דגם זמין בהתאמה אישית מלאה — שם, פסוק, צבע וסגנון עטרה.</p>
     </div>
 
     <div class="lbgrid">
